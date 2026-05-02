@@ -54,60 +54,66 @@ int main()
     do {
         int option = 0;
         int ChangeOption = 0;
-        std::vector<std::string> message = { "\nChose option below: ", " Exit - 0,\n count repeats - 1,\n clear out map - 2,\n write to console - 3,\n save to file - 4,\n change size of matrix - 5\n: " };
+        std::vector<std::string> message = { "Chose option below: ", " Exit - 0,\n count repeats - 1,\n clear out map - 2,\n write to console - 3,\n save to file - 4,\n change size of matrix - 5\n: " };
         CC::CIWithBoundariesCheck(message, option, [](int& v) { if (v < 0 || v > 5) return false; else return true;}, (std::string)("You wrote wrong option"));
         
         switch (option) {
-        case 0:
-            std::cout << "GoodBye" << std::endl;
+        case 0: // Exit
+            std::cout << "\nGoodBye" << std::endl;
             return 0;
-        case 1:
+        case 1: // Count
             if (!m.getFieldStatus()) {
                 int type = 0;
-                std::vector<std::string> countMessage = { "Now, chose the way to count amount of repeats: " ,"Multithreads - 0, singleThread - 1: " };
+                std::vector<std::string> countMessage = { "\nNow, chose the way to count amount of repeats: " ,"Multithreads - 0, singleThread - 1: " };
                 CC::CIWithBoundariesCheck(countMessage, type, [](int& v) { if (v < 0 || v > 1) return false; else return true;}, (std::string)("You wrote wrong option"));
                 std::cout << "Start counting" << std::endl;
                 m.parallelCount(type);
                 std::cout << "Counting ended" << std::endl;
+                std::cout << std::endl;
             }
             else {
                 CC::WriteErrorMessage((std::string)("Sorry, but you have to clear out map first"));
             }
             break;
-        case 2:
+        case 2: // Clear
             m.clearOutMap();
             break;
-        case 3:
+        case 3: // Write to console
             if (m.getFieldStatus()) {
-                std::cout << "In square quotes is number and after it\n goes how many times that number was repeated: " << std::endl;
+                std::cout << "\nIn square quotes is number and after it \ngoes how many times that number was repeated: " << std::endl;
+                std::cout << std::endl;
                 std::cout << m << std::endl;
                 std::cout << "Write was done" << std::endl;
+                std::cout << std::endl;
             }
             else {
                 CC::WriteErrorMessage((std::string)("Sorry, but out map is empty, fill it before write into console"));
             }
             break;
-        case 4:
+        case 4: // Write/save to file
             if (m.getFieldStatus()) {
                 std::ofstream save("./savedOutMap.map");
                 std::cout << "\nIn square quotes is number and after it,\ngoes how many times that number was repeated: " << std::endl;
                 save << m;
                 std::cout << "Filling was done" << std::endl;
+                std::cout << std::endl;
             }
             else {
                 CC::WriteErrorMessage((std::string)("Sorry, but out map is empty, fill it before write into file"));
             }
             break;
-        case 5:
-            message = { "Are you shure to change size? " "It will absolutely clear all data and recreate it!", "No - 0, Yes - 1: " };
+        case 5: // Recreate the Matrix
+            message = { "\nAre you shure to change size? " "It will absolutely clear all data and recreate it!", "No - 0, Yes - 1: " };
             CC::CIWithBoundariesCheck(message, ChangeOption, [](int& v) { if (v < 0 || v > 1) return false; else return true;}, (std::string)("You wrote wrong option"));
             if (ChangeOption == 0) {
+                std::cout << std::endl;
                 break;
             }
             if (m.getFieldStatus()) {
                 m.clearOutMap();
             }
             m.recreateMatrix(); // Dangerous move
+            std::cout << std::endl;
             break;
         default:
             break;
