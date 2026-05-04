@@ -26,15 +26,15 @@ void Matrix::initialize() {
     }
 }
 
-void count(int index, std::mutex& mut, int** matrix, int& rows, int& columns, std::map<int, int>& outMap) {
+void count(int index, std::mutex& mut, int**& matrix, int& rows, int& columns, std::map<int, int>& outMap) {
     mut.lock();
-    int** tempRow = new int*[rows];
+    int** tempRow = new int*[rows / 2];
     std::map<int, int> tempMap;
+    int j = 0;
     for (int i = index; i < rows; i++) {
-        for (int j = 0; j < rows / 2; j++) {
-            // Fill row from main matrix
-            tempRow[j] = matrix[i];
-        }
+        // Fill row from main matrix
+        tempRow[j] = matrix[i];
+        j++;
 
         if (i < rows - 1) {
             i++;

@@ -2,11 +2,11 @@
 
 bool CC::ConsoleNumInputCheck() {
 	if (std::cin.fail()) {
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		std::cerr << std::endl;
 		std::cerr << "You wrote not a number, pls be careful!" << std::endl;
 		std::cerr << std::endl;
-		std::cin.clear();
-		std::cin.ignore();
 		return true;
 	}
 	else {
